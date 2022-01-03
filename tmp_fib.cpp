@@ -7,9 +7,9 @@
 using namespace std;
 
 
-template<int N>
+template<int n>
 struct Fib{
-    static const int res = Fib<N-1>::res + Fib<N-2>::res;
+    static const int res = Fib<n-1>::res + Fib<n-2>::res;
 };
 
 template<>
