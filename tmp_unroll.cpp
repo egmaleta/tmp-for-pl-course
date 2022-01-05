@@ -50,4 +50,6 @@ int main(){
     cout << Sumatory<NUMBER>::sum << '\n' << '\n';
 
     FunctionExecutorLoop<1, NUMBER, 2, decltype(mult_print)>::exec(mult_print);
+
+    return 0;
 }
