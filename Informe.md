@@ -279,4 +279,53 @@ int main(){
 
 ### ¿Hasta dónde se puede utilizar `constexpr` en C++14?
 
+A partir de C++14 se pueden definir y modicar variables dentro de las funciones marcadas con `constexpr`, asi como son permitidas tambien las estructuras de control de flujo (`if-else`, `for`, `while`, `do-while`, `switch-case`). A continuación un ejemplo del algoritmo para contar la cantidad de repeticiones de un caracter en un *string* como `char*`:
+```cpp
+#include <iostream>
+using namespace std;
+
+constexpr int count_char(const char* str, const char ch){
+    int count = 0;
+    for (int k = 0; str[k]; ++k){
+        if (str[k] == ch){
+            ++count;
+        }
+    }
+    return count;
+}
+
+int main(){
+    constexpr char* sentence = (char*)"Carlos lavaba las sábanas sucias";
+    constexpr char ch = 'a';
+    constexpr int count = count_char(sentence, ch);
+    cout << count << '\n'; // Imprime 8
+
+    return 0;
+}
+```
+
+A partir de C++14 se pueden declarar métodos de tipo de rotorno `void` como `constexpr`:
+```cpp
+#include <iostream>
+using namespace std;
+
+constexpr void square(int& n){
+    n *= n;
+}
+
+constexpr int squared(int n){
+    square(n);
+    return n;
+}
+
+int main(){
+    constexpr int n = squared(5);
+    static_assert(n == 25, ""); // compila
+
+    return 0;
+}
+```
+
+## Sobre Características propuestas para C++17
+
 
