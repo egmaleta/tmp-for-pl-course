@@ -21,6 +21,15 @@ constexpr int count_char(const char* str, const char ch){
     return count;
 }
 
+constexpr void square(int& n){
+    n *= n;
+}
+
+constexpr int squared(int n){
+    square(n);
+    return n;
+}
+
 int main(){
     constexpr int result1 = sum(10, 7); // compila
 
@@ -33,7 +42,10 @@ int main(){
     constexpr char* sentence = (char*)"Carlos lavaba las sábanas sucias";
     constexpr char ch = 'a';
     constexpr int count = count_char(sentence, ch);
-    cout << count << '\n';
+    cout << count << '\n'; // Imprime 8
+
+    constexpr int n = squared(5);
+    static_assert(n == 25, ""); // compila
 
     return 0;
 }
