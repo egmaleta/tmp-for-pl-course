@@ -34,9 +34,9 @@ int main(){
     cout << result1 << '\n';
     cout << result2 << '\n';
 
-    constexpr char* a = (char*)"perro";
-    constexpr char* b = (char*)"perru";
-    cout << string_compare(a, b) << '\n';
+    constexpr char* a = (char*)"La vaca Lola tiene cabeza y tiene cola";
+    constexpr char* b = (char*)"La vaca Lola tiene cabeza y tiene calor";
+    cout << string_compare(a, b) << '\n'; // imprime 1
 
     return 0;
 }
