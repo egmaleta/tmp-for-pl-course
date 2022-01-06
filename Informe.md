@@ -1,6 +1,7 @@
 # Seminario #14: C++ y Metaprogramación
 
 Integrantes:
+
 - Carlos Aguila
 - Eduardo García
 - Ricardo Piloto
@@ -169,7 +170,7 @@ En el ejemplo, intentar usar `T::InnerInt` resulta en un fallo de deducción par
 
 El objetivo principal de esta palabra clave es mejorar el rendimiento de los programas al reducir la cantidad de cálculos en tiempo de ejecución mediante la realización de estos en tiempo de compilación.
 
-La palabra clave ha sido mejorada con el avance de las versiones: a partir de **C++14** aumentaron las sentencias de retorno que podria tener una función marcada con `constexpr` y a partir de **C++17** la palabra clave puede ser utilizada en bloques *if-else* donde una sola de sus secciones seria seleccionada para compilar.
+La palabra clave ha sido mejorada con el avance de las versiones: a partir de **C++14** aumentaron las sentencias de retorno que podria tener una función marcada con `constexpr` y a partir de **C++17** la palabra clave puede ser utilizada en bloques `if-else` donde una sola de sus secciones seria seleccionada para compilar.
 
 Algunas restricciones de funciones marcadas con `constexpr`:
 
@@ -304,7 +305,7 @@ int main(){
 }
 ```
 
-A partir de C++14 se pueden declarar métodos de tipo de rotorno `void` como `constexpr`:
+A partir de C++14 se pueden declarar métodos de tipo de retorno `void` como `constexpr`:
 ```cpp
 #include <iostream>
 using namespace std;
@@ -330,7 +331,7 @@ int main(){
 
 ### Template Argument Deduction for Class Templates
 
-Propuesta basada en *Template Argument Deduction for Function Templates*, la problemática a resolver es la deducción por parte del compilador del tipo de los argumentos de la clase que sea desea construir, justo como ocurre a continuación con funciones:
+Propuesta basada en *Template Argument Deduction for Function Templates*, la problemática a resolver es la deducción por parte del compilador del tipo de los argumentos de la clase que se desea construir, justo como ocurre a continuación con funciones:
 ```cpp
 template<class T>
 int f(T obj);
@@ -362,9 +363,9 @@ la introducción de *Template Argument Deduction for Class Templates* permitió 
 
 ### `if (init; condition)` y `switch (init; condition)`
 
-Esta propuesta es para evitar el uso de variables declaradas fuera del scope de un bloque `if-else` o un bloque `switch-case` y que solo seran usadas dentro de estos scopes, asi, por ejemplo, un código que nos diga si un numero aleatorio es par o impar, pasaria de ser asi:
+Esta propuesta es para evitar el uso de variables declaradas fuera del scope de un bloque `if-else` o un bloque `switch-case` y que solo serán usadas dentro de estos scopes, asi, por ejemplo, un código que nos diga si un número aleatorio es par o impar, pasaria de ser asi:
 ```cpp
-int k = random_number(); // función hipotetica
+int k = random_number(); // función hipotética
 if (k % 2 == 0){
     std::cout << "Es par" << '\n';
 } else {
