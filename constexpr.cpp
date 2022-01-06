@@ -11,6 +11,19 @@ int ten(){
     return 10;
 }
 
+constexpr int string_compare(const char* str1, const char* str2){
+    int i = 0;
+
+    for (; str1[i] && str2[i] && str1[i] == str2[i]; ++i){}
+
+    if (str1[i] == str2[i])
+        return 0;
+    
+    if (str1[i] < str2[i])
+        return -1;
+    
+    return 1;
+}
 
 int main(){
     constexpr int result1 = sum(10, 7); // compila
@@ -20,6 +33,10 @@ int main(){
 
     cout << result1 << '\n';
     cout << result2 << '\n';
+
+    constexpr char* a = (char*)"perro";
+    constexpr char* b = (char*)"perru";
+    cout << string_compare(a, b) << '\n';
 
     return 0;
 }
