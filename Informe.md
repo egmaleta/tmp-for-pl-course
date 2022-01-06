@@ -328,4 +328,115 @@ int main(){
 
 ## Sobre Características propuestas para C++17
 
+### Template Argument Deduction for Class Templates
 
+Propuesta basada en *Template Argument Deduction for Function Templates*, la problemática a resolver es la deducción por parte del compilador del tipo de los argumentos de la clase que sea desea construir, justo como ocurre a continuación con funciones:
+```cpp
+template<class T>
+int f(T obj);
+```
+`f` puede ser llamada especificando el tipo del template,
+```cpp
+int a = f<float>(5.0);
+```
+o sin especificarlo, pues el compilador deduce que el tipo argumento del template gracias al tipo del argumento de la función.
+```cpp
+int a = f(5.0);
+```
+Antes de C++17 este problema era resuelto con usando *Template Argument Deduction for Function Templates*, en lugar de especificar los tipos,
+```cpp
+std::pair<int, float> p(0, 3.467);
+```
+se podia usar una función como
+```cpp
+auto p = std::make_pair(0, 3.467);
+```
+A partir de C++17, ya se puede declarar sin problemas:
+```cpp
+std::pair p(0, 3.467);
+```
+
+Esto se puede lograr gracias a algo llamado *template deduction guides*: patrones asociados a la clase template que le dice al compilador como traducir un conjunto de parámetros en los argumentos del template.
+
+la introducción de *Template Argument Deduction for Class Templates* permitió evitar el uso de funciones como `std::make_pair` y lograr un código mas limpio y legible, siempre y cuando se sepa que los parámetros podrán ser deducidos por el compilador.
+
+### `if (init; condition)` y `switch (init; condition)`
+
+Esta propuesta es para evitar el uso de variables declaradas fuera del scope de un bloque `if-else` o un bloque `switch-case` y que solo seran usadas dentro de estos scopes, asi, por ejemplo, un código que nos diga si un numero aleatorio es par o impar, pasaria de ser asi:
+```cpp
+int k = random_number(); // función hipotetica
+if (k % 2 == 0){
+    std::cout << "Es par" << '\n';
+} else {
+    std::cout << "Es impar" << '\n';
+}
+```
+a ser asi:
+```cpp
+if (int k = random_number(); k % 2 == 0){
+    std::cout << "Es par" << '\n';
+} else {
+    std::cout << "Es impar" << '\n';
+}
+```
+en el segundo ejemplo la variable `k` solamente "vive" en el scope del bloque `if-else`.
+
+De manera similar ocurre con la estructura `switch-case`, se puede lograr un codigo de esta forma:
+```cpp
+switch(int k = random_number(); k){
+case 0:
+    // codigo
+    break;
+case 1:
+    // codigo
+    break;
+...
+case default:
+    // mas codigo
+    break;
+}
+```
+
+### Structure Bindings
+
+Propuesta para enlazar los campos `.first` y `.second` de instancias de `std::pair` a variables.
+
+Antes de C++17:
+```cpp
+map<int, string> m{
+    {1, "aaa"},
+    {2, "bbb"},
+    {3, "ccc"}
+};
+
+// insertar en el mapa
+auto result = m.insert({4, "ddd"});
+```
+``result.first`` es un iterator apuntado al nuevo par y `result.second` es un valor booleano que determina si el par fue insertado correctamente.
+
+A partir de C++17:
+```cpp
+map<int, string> m{
+    {1, "aaa"},
+    {2, "bbb"},
+    {3, "ccc"}
+};
+
+// insertar en el mapa
+auto [it, success] = m.insert({4, "ddd"});
+if (success){
+    // codigo
+}
+```
+`it` captura el iterador apuntando al nuevo par y `success` el valor booleano que determina si el par fue insertado correctamente.
+
+### Direct List Initialization of `enum`s
+
+A partir de C++17 la inicialización de `enum`s usando llaves `{}` está permitida. A continuación un ejemplo de la sintaxis:
+```cpp
+enum Byte: unsigned char {};
+Byte a {0};
+Byte b {-1}; // error
+Byte c = Byte{1};
+Byte d = Byte{256}; // error
+```
