@@ -11,18 +11,14 @@ int ten(){
     return 10;
 }
 
-constexpr int string_compare(const char* str1, const char* str2){
-    int i = 0;
-
-    for (; str1[i] && str2[i] && str1[i] == str2[i]; ++i){}
-
-    if (str1[i] == str2[i])
-        return 0;
-    
-    if (str1[i] < str2[i])
-        return -1;
-    
-    return 1;
+constexpr int count_char(const char* str, const char ch){
+    int count = 0;
+    for (int k = 0; str[k]; ++k){
+        if (str[k] == ch){
+            ++count;
+        }
+    }
+    return count;
 }
 
 int main(){
@@ -34,9 +30,10 @@ int main(){
     cout << result1 << '\n';
     cout << result2 << '\n';
 
-    constexpr char* a = (char*)"La vaca Lola tiene cabeza y tiene cola";
-    constexpr char* b = (char*)"La vaca Lola tiene cabeza y tiene calor";
-    cout << string_compare(a, b) << '\n'; // imprime 1
+    constexpr char* sentence = (char*)"Carlos lavaba las sábanas sucias";
+    constexpr char ch = 'a';
+    constexpr int count = count_char(sentence, ch);
+    cout << count << '\n';
 
     return 0;
 }
